@@ -22,4 +22,8 @@ export class ProductServiceService {
   getSingleProduct(id:any){
     return this.http.post<any>(`${this.serviceUrl}/product/getProduct`,{id})
   }
+
+  getCategoryProducts(category:any){
+    return this.http.post<any>(`${this.serviceUrl}/product/getCategoryWiseProducts`,{category})
+  }
 }

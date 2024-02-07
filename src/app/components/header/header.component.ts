@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartServiceService } from '../services/cart-service.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  userCartData:any;
+  cartTotalAmt:any;
+  isDropdownOpen: boolean = false;
+
+  constructor(public cartService:CartServiceService) { }
 
   ngOnInit(): void {
+    this.cartService.cartTotal.subscribe(total=>this.cartTotalAmt = total);
+    this.cartService.cartDataBS.subscribe(data=>this.userCartData = data);
+    console.log("userCartData.items[0].inCart !== 0",this.userCartData,this.userCartData.items[0].inCart !== 0)
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
 }
