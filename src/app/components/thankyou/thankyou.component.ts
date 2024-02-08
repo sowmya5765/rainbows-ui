@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { OrderServiceService } from '../services/order-service.service';
 
 @Component({
   selector: 'app-thankyou',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThankyouComponent implements OnInit {
 
-  constructor() { }
+  orderId: any;
 
-  ngOnInit(): void {
+  constructor(private router: Router,
+    private orderService: OrderServiceService) {
+    //   const navigation:any = this.router.getCurrentNavigation();
+    //   const state = navigation.extras.state as {
+    //     orderId: Number
+    //  }
+    //  this.orderId = state.orderId;
   }
 
+  ngOnInit(): void {
+ }
 }
