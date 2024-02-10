@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartServiceService } from '../services/cart-service.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
   cartTotalAmt:any;
   isDropdownOpen: boolean = false;
 
-  constructor(public cartService:CartServiceService) { }
+  constructor(public cartService:CartServiceService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.cartService.cartTotal.subscribe(total=>this.cartTotalAmt = total);

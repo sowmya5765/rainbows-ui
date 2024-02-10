@@ -13,6 +13,8 @@ import { ProductComponent } from './components/product/product.component';
 import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './components/auth/auth.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { AuthComponent } from './components/auth/auth.component';
     HomeComponent,
     ProductComponent,
     ThankyouComponent,
-    AuthComponent
+    AuthComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
