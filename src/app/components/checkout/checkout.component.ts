@@ -20,14 +20,27 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cartTotal.subscribe(total=>this.cartTotalAmount=total);
     this.cartService.cartDataBS.subscribe(data=>this.userCartData=data);
-    this.userCartData.total=5000;
-    this.cartTotalAmount=1000;
     console.log("user dataaaaaaaaaaaa",this.userCartData)
   }
 
   onCheckout(){
-    console.log("here???????????")
-    this.router.navigate(['/thankyou'])
+    let data:any =[];
+    let body={
+      items:[],
+      amtPaid:0
+    };
+    for(let item of this.userCartData.items){
+      let obj = {
+        id:item.product.id,
+        quantity:item.inCart
+      }
+      data.push(obj);
+    }
+    body.items = data;
+    body.amtPaid = this.cartTotalAmount;
+    this.orderService.createOrder(body).subscribe((res:any)=>{
+      this.router.navigate(['/thankyou'])
+    })
   }
 
 }

@@ -28,7 +28,7 @@ export class CartServiceService {
   }
 
   serviceUrl = environment.serviceUrl;
-  cartTotal = new BehaviorSubject<number>(100);
+  cartTotal = new BehaviorSubject<number>(0);
   cartDataBS = new BehaviorSubject<any>(this.cartData)
 
   constructor( private http: HttpClient,private router:Router,private orderService:OrderServiceService,private productService:ProductServiceService) { 
@@ -43,7 +43,7 @@ export class CartServiceService {
 
       this.clientCartData.products.forEach((element) => {
         this.productService.getSingleProduct(element.id).subscribe((res:any)=>{
-          if(this.cartData.items[0].inCart ==0){
+          if(this.cartData.items[0].inCart == 0){
             this.cartData.items[0].inCart = element.inCart;
             this.cartData.items[0].product = res.data;
 
@@ -54,6 +54,7 @@ export class CartServiceService {
               inCart:element.inCart,
               product:res.data
             })
+            this.calculateTotal();
             this.clientCartData.total = this.cartData.total;
             localStorage.setItem('cart',JSON.stringify(this.clientCartData))
           }
@@ -82,7 +83,6 @@ export class CartServiceService {
           if(amt!=undefined && amt < res.data.inStock){
             this.cartData.items[index].inCart = this.cartData.items[index].inCart < res.data.inStock? amt: res.data.inStock
           }else{
-            console.log("hvajhbdkjbskj")
             this.cartData.items[index].inCart < res.data.inStock? this.cartData.items[index].inCart++ : res.data.inStock
           }
           this.clientCartData.products[index].inCart = this.cartData.items[index].inCart;
@@ -111,17 +111,19 @@ export class CartServiceService {
     if (increase) {
       data.inCart < data.product.inStock? data.inCart++ : data.product.inStock;
       this.clientCartData.products[index].inCart = data.inCart;
+      this.calculateTotal();
       this.clientCartData.total = this.cartData.total;
       this.cartDataBS.next({...this.cartData});
       localStorage.setItem('cart', JSON.stringify(this.clientCartData));
     } else {
       data.inCart--;
       if (data.inCart < 1) {
-        //this.DeleteProductFromCart(index);
+        this.deleteProductInCart(index);
         this.cartDataBS.next({...this.cartData});
       } else {
         this.cartDataBS.next({...this.cartData});
         this.clientCartData.products[index].inCart = data.inCart;
+        this.calculateTotal();
         this.clientCartData.total = this.cartData.total;
         localStorage.setItem('cart', JSON.stringify(this.clientCartData));
       }
@@ -134,7 +136,7 @@ export class CartServiceService {
     if (window.confirm('Are you sure you want to delete the item?')) {
       this.cartData.items.splice(index, 1);
       this.clientCartData.products.splice(index, 1);
-      //this.CalculateTotal();
+      this.calculateTotal();
       this.clientCartData.total = this.cartData.total;
 
       if (this.clientCartData.total === 0) {

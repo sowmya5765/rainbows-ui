@@ -15,4 +15,8 @@ export class OrderServiceService {
   getOrder(id:any){
     return this.http.post(`${this.serviceUrl}/order/getOrder`,{id})
   }
+
+  createOrder(body:any){
+    return this.http.post(`${this.serviceUrl}/order/createOrder`,body)
+  }
 }
