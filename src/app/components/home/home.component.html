@@ -12,7 +12,7 @@
             </div>
             <div class="shop-body">
               <h3>Bows<br>Collection</h3>
-              <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+              <a [routerLink]="['/category', 'Bows']" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="shop-body">
               <h3>Scrunchies<br>Collection</h3>
-              <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+              <a [routerLink]="['/category', 'Srunchie']" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="shop-body">
               <h3>Head-Bands<br>Collection</h3>
-              <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+              <a [routerLink]="['/category', 'Headband']" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
                 </div> 
                 <div class="card-body">
                   <h6>{{p.description.substr(0, 40)}} ....</h6>
-                  <p class="lead">{{p.price | currency:'USD'}}</p>
+                  <p class="lead">{{p.price | currency:'INR'}}</p>
                 </div>
                 <div class="row d-flex justify-content-center border-primary my-3">
                   <div class="col-md-6 ">

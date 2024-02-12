@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './components/auth/auth.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { CategoryComponent } from './components/category/category.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ContactComponent } from './components/contact/contact.component';
     ThankyouComponent,
     AuthComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
