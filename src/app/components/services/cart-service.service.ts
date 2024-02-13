@@ -220,6 +220,18 @@ export class CartServiceService {
     return subTotal;
   }
 
+  checkOutAndOrder(body:any){
+    this.orderService.createOrder(body).subscribe((res:any)=>{
+      if(res.status=='success'){
+        this.resetCartData();
+        this.router.navigate(['/thankyou']);
+        this.clientCartData = {products: [{inCart: 0, id: 0}], total: 0};
+        this.cartTotal.next(0);
+        localStorage.setItem('cart', JSON.stringify(this.clientCartData));
+    }
+    })
+  }
+
   resetCartData(){
     this.cartData = {
       total:0,

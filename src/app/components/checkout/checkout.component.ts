@@ -16,6 +16,11 @@ export class CheckoutComponent implements OnInit {
 
   cartTotalAmount:any;
   userCartData:any;
+  address:any;
+  city:any;
+  state:any;
+  pinCode:any;
+  orderNotes:any;
 
   ngOnInit(): void {
     this.cartService.cartTotal.subscribe(total=>this.cartTotalAmount=total);
@@ -25,9 +30,18 @@ export class CheckoutComponent implements OnInit {
 
   onCheckout(){
     let data:any =[];
+    if(this.address==''|| this.pinCode==''){
+      this.cartService.showAlert('Please add Address and Pincode')
+      return;
+    }
     let body={
       items:[],
-      amtPaid:0
+      amtPaid:0,
+      address:this.address,
+      city:this.city,
+      state:this.state,
+      pinCode:this.pinCode,
+      status:'CONFIRMED',
     };
     for(let item of this.userCartData.items){
       let obj = {
@@ -38,9 +52,7 @@ export class CheckoutComponent implements OnInit {
     }
     body.items = data;
     body.amtPaid = this.cartTotalAmount;
-    this.orderService.createOrder(body).subscribe((res:any)=>{
-      this.router.navigate(['/thankyou'])
-    })
+    this.cartService.checkOutAndOrder(body);
   }
 
 }
