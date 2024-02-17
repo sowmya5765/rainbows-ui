@@ -8,6 +8,7 @@ import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { CategoryComponent } from './components/category/category.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
   {  path:'',
@@ -33,6 +34,9 @@ const routes: Routes = [
   },
   {  path:'category/:category',
     component:CategoryComponent
+  },
+  {  path:'auth',
+    component:AuthComponent
   },
 ];
 
