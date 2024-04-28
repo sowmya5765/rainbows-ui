@@ -9,6 +9,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { AuthenticationGuard } from './authentication.guard';
 
 const routes: Routes = [
   {  path:'',
@@ -21,9 +22,11 @@ const routes: Routes = [
     component:CartComponent
   },
   {  path:'checkout',
+    canActivate: [AuthenticationGuard],
     component:CheckoutComponent
   },
   {  path:'thankyou',
+    canActivate: [AuthenticationGuard],
     component:ThankyouComponent
   },
   {  path:'about',

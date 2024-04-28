@@ -3,6 +3,7 @@ import { CartServiceService } from '../services/cart-service.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { AuthserviceService } from '../services/authservice.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   isDropdownOpen: boolean = false;
   SignInStatus = 'Login';
 
-  constructor(public cartService:CartServiceService,
+  constructor(public cartService:CartServiceService, public authService: AuthserviceService,
     private router: Router,private http:HttpClient) { }
 
   ngOnInit(): void {
@@ -25,6 +26,14 @@ export class HeaderComponent implements OnInit {
     if(localStorage.getItem('authorization')){
       this.SignInStatus = 'Logout'
     }
+
+    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+      if(isAuthenticated == true){
+        this.SignInStatus = 'Logout'
+      } else {
+        this.SignInStatus = 'Login'
+      }
+    });
   }
 
   userSignInOrSignOut(){
@@ -33,19 +42,12 @@ export class HeaderComponent implements OnInit {
       if(localStorage.getItem('userId')){
         body.id = localStorage.getItem('userId');
       }
-      this.loginOut(body).subscribe((res:any)=>{
-        console.log("resuuuuuuuu",res.data);
-        localStorage.removeItem('authorization');
-        this.SignInStatus = 'Login';
-        this.router.navigate(['/']);
-      })
+      body.status = "INACTIVE";
+      this.authService.logOut(body);
+      this.SignInStatus = 'Login';
     }else{
         this.router.navigate(['/auth']);
     }
-  }
-
-  loginOut(body:any){
-    return this.http.post(`${environment.serviceUrl}/admin/logout`,body)
   }
 
   toggleDropdown() {

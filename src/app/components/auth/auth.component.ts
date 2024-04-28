@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthserviceService } from '../services/authservice.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private http:HttpClient,private router:Router) { }
+  constructor(private http:HttpClient,private router:Router, public authService: AuthserviceService) { }
 
   ngOnInit(): void {
   }
@@ -26,18 +27,7 @@ export class AuthComponent implements OnInit {
     }else{
       alert(`Enter email and password!!`)
     }
-    this.loginApi(body).subscribe((res:any)=>{
-      console.log("resuuuuuuuu",res.data);
-      localStorage.setItem('authorization',res.data.accessToken)
-      localStorage.setItem('userId',res.data.userId)
-      this.router.navigate(['/']);
-    },(err)=>{
-      alert('Failed To Login')
-    })
-  }
-
-  loginApi(body:any){
-    return this.http.post(`${environment.serviceUrl}/admin/login`,body)
+    this.authService.logIn(body);
   }
 
 }
